@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#111116"><title>Kumo — Leitor de Mangá</title>
+<style>
+:root{--bg:#111116;--panel:#1d1d25;--line:#343440;--txt:#f7f5fc;--muted:#aaa8b8;--accent:#b9a2ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:15px system-ui,sans-serif}button,input,select{font:inherit}button{border:0;border-radius:12px;padding:11px 14px;background:#292934;color:var(--txt)}button:active{transform:scale(.98)}.primary{background:var(--accent);color:#171320;font-weight:700}.app{max-width:900px;margin:auto;height:100vh;height:100dvh;display:flex;flex-direction:column}.top{padding:calc(env(safe-area-inset-top) + 12px) 16px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.brand{font-weight:850;font-size:22px}.logo{display:inline-grid;place-items:center;background:var(--accent);color:#171320;border-radius:10px;width:34px;height:34px;margin-right:7px}.screen{display:none;flex:1;min-height:0;overflow:auto}.screen.active{display:block}.home,.settings{padding:18px 16px 30px}.hero{border:1px solid #44365b;border-radius:22px;padding:22px;background:radial-gradient(ellipse at top right,#45305e,transparent 60%),#1d1a27;margin-bottom:22px}.eyebrow{color:var(--accent);font-weight:800;text-transform:uppercase;font-size:11px;letter-spacing:1.5px}.hero h1{font-size:29px;line-height:1.12;margin:9px 0}.hero p,.muted{color:var(--muted)}.section{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px}.section h2{font-size:17px;margin:0}.imports{display:grid;grid-template-columns:1fr 1fr;gap:10px}.imports button{text-align:left;background:var(--panel);border:1px solid var(--line);padding:15px}.imports b,.imports small{display:block}.imports small{color:var(--muted);font-size:11px;margin-top:4px}.empty{padding:25px 14px;text-align:center;border:1px dashed #464452;border-radius:16px;color:var(--muted)}.books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.book{overflow:hidden;border-radius:15px;background:var(--panel);border:1px solid var(--line)}.cover{aspect-ratio:3/4;display:grid;place-items:center;background:linear-gradient(140deg,#393148,#16161c);overflow:hidden}.cover img{width:100%;height:100%;object-fit:cover}.cover span{font-size:48px;color:var(--accent)}.info{padding:10px}.info b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}.info small{color:var(--muted)}.bar{height:3px;background:#393744;margin-top:8px}.bar i{display:block;height:100%;background:var(--accent)}.nav{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding:9px 10px calc(env(safe-area-inset-bottom) + 7px)}.nav button{background:transparent;color:var(--muted)}.nav button.active{color:var(--accent)}.reader{height:100%;display:flex;flex-direction:column;background:#08080b;position:relative;overflow:hidden}.reader-head,.reader-foot{padding:calc(env(safe-area-inset-top) + 7px) 10px 8px;background:#111116eF;display:flex;align-items:center;gap:8px}.reader-head .title{flex:1;min-width:0}.title b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}.title small{color:var(--muted)}.reader button{padding:9px 12px}.stage{flex:1;min-height:0;display:flex;justify-content:center;align-items:center;overflow:auto;touch-action:none;position:relative;overscroll-behavior:contain}.stage .page-wrap{position:relative;flex:none;max-width:none;max-height:none}.stage .page-wrap img,.stage .page-wrap canvas{position:absolute;left:0;top:0;display:block;max-width:none;max-height:none;object-fit:fill;transform-origin:0 0;transition:none;user-select:none;-webkit-user-drag:none}.stage.zoomed{justify-content:flex-start;align-items:flex-start}.stage.vertical{display:block;overflow:auto;touch-action:pan-y}.stage.vertical .page-wrap{margin:0 auto 4px}.stage.width .page-wrap{margin:0 auto}.stage.height{align-items:center}.stage.vertical .page-wrap img,.stage.vertical .page-wrap canvas{transform:none!important}.foot-inner{width:100%}.controls{display:flex;align-items:center;gap:8px}.controls input{flex:1;min-width:20px;accent-color:var(--accent)}.count{font-size:12px;color:var(--muted);min-width:62px;text-align:center}.subcontrols{display:flex;justify-content:space-between;align-items:center;margin-top:8px}.brightness-overlay{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}.reader.hide-ui .reader-head,.reader.hide-ui .reader-foot{opacity:0;pointer-events:none}.setting{padding:15px 0;border-bottom:1px solid var(--line)}.setting label{font-weight:650}.setting input[type=range],.setting select{display:block;width:100%;margin-top:10px;accent-color:var(--accent)}.setting select{background:#292934;color:white;border:1px solid var(--line);border-radius:10px;padding:10px}.setting small{color:var(--muted)}.hidden{display:none!important}.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);padding:10px 14px;background:#302e3b;border:1px solid #4b4659;border-radius:12px;z-index:10;max-width:90vw;text-align:center;font-size:13px}@media(min-width:650px){.books{grid-template-columns:repeat(4,minmax(0,1fr))}.home,.settings{padding:25px}}
+.book{position:relative}.del{position:absolute;top:6px;right:6px;padding:6px 10px;border-radius:10px;background:#000b;color:#fff;font-size:12px}.del.arm{background:#c0392b}body{-webkit-touch-callout:none}
+</style></head><body><div class="app">
+<header class="top" id="top"><div class="brand"><span class="logo">雲</span>Kumo <span class="muted" style="font-size:11px">MANGÁ</span></div><div><button id="importTop">＋</button> <button id="settingsTop">⚙</button></div></header>
+<main id="home" class="screen active"><div class="home"><section class="hero"><div class="eyebrow">Seu próximo capítulo</div><h1>Entre na história.<br>Sem distrações.</h1><p>Leitura confortável, fluida e feita para você.</p><button class="primary" id="importHero">＋ Importar mangá</button></section>
+<div class="section"><h2>Sua biblioteca</h2><small class="muted" id="countBooks">0 títulos</small></div><div class="imports"><button id="importImages">▧ <b>Imagens</b><small>JPG, PNG, WebP, GIF</small></button><button id="importZip">▤ <b>CBZ / ZIP</b><small>Capítulo compactado</small></button><button id="importPdf">▧ <b>PDF</b><small>Documento PDF</small></button></div>
+<div class="section"><h2>Continue lendo</h2></div><div id="continue" class="empty">Importe imagens ou um arquivo CBZ/ZIP para começar.</div><div class="section"><h2>Todos os títulos</h2><small class="muted">Biblioteca local</small></div><div id="books" class="books"></div><p class="muted" style="font-size:12px">Seus mangás, capas, favoritos e a página atual ficam salvos neste aparelho e funcionam sem internet.</p></div></main>
+<main id="settings" class="screen"><div class="settings"><h1>Configurações</h1><p class="muted">Ajuste a leitura ao seu gosto.</p>
+<div class="setting"><label for="brightness">Brilho da imagem <b id="brightLabel">100%</b></label><input id="brightness" type="range" min="35" max="120" value="100"><small>Controle visual da página, não do brilho físico do aparelho.</small></div>
+<div class="setting"><label for="theme">Tema</label><select id="theme"><option value="dark">Escuro</option><option value="black">Preto AMOLED</option><option value="sepia">Sépia</option><option value="light">Claro</option></select></div>
+<div class="setting"><label for="transition">Transição de página</label><select id="transition"><option value="slide">Deslizar suave</option><option value="fade">Dissolver</option><option value="none">Sem animação</option></select></div>
+<div class="setting"><label for="mode">Modo de leitura</label><select id="mode"><option value="paged">Página por página</option><option value="vertical">Rolagem vertical</option><option value="width">Ajustar à largura</option><option value="height">Ajustar à altura</option></select></div>
+<div class="setting"><label><input id="rtl" type="checkbox" checked> Sentido mangá (direita para esquerda)</label></div>
+<div class="setting"><label><input id="tapZones" type="checkbox" checked> Toque nas laterais para mudar página</label></div>
+<div class="setting"><label><input id="keepAwake" type="checkbox"> Tentar manter tela ligada (se suportado)</label></div>
+<p class="muted" style="font-size:12px">Atalhos no leitor: ← / → muda a página; Espaço avança; Esc sai da tela cheia ou volta à biblioteca. Use −/＋ ou pinça para zoom.</p><button id="backHome">Voltar à biblioteca</button></div></main>
+<section id="readerScreen" class="screen"><div class="reader" id="reader"><div class="reader-head" id="readerHead"><button id="close">‹</button><div class="title"><b id="bookTitle">Nenhum capítulo</b><small id="pageSub">Página 0 de 0</small></div><button id="favorite">☆</button><button id="zoomOut" title="Diminuir zoom">−</button><button id="zoomIn" title="Aumentar zoom">＋</button><button id="fullscreen" title="Tela cheia">⛶</button><button id="readerSettings">☼</button></div><div class="stage" id="stage"><div class="muted">Importe um capítulo para começar</div></div><div id="brightnessOverlay" class="brightness-overlay"></div><div class="reader-foot" id="readerFoot"><div class="foot-inner"><div class="controls"><button id="prev">‹</button><input id="slider" type="range" min="1" max="1" value="1"><button id="next">›</button><span id="pageCount" class="count">0 / 0</span></div><div class="subcontrols"><button id="modeButton">▤ Página</button><small id="favStatus" class="muted">Sem favorito</small><button id="quickBright">☼ Brilho</button></div></div></div></div></section>
+<nav class="nav" id="nav"><button class="active" data-target="home">⌂ Biblioteca</button><button data-target="settings">⚙ Ajustes</button></nav></div>
+<input type="file" id="imageFiles" accept="image/*" multiple hidden><input type="file" id="zipFile" accept=".cbz,.zip,application/zip" hidden><input type="file" id="pdfFile" accept=".pdf,application/pdf" hidden><div id="toastRoot"></div>
+<script src="lib/jszip.min.js"></script><script src="lib/pdf.min.js"></script><script>
+(()=>{'use strict';const $=id=>document.getElementById(id);const S={books:[],book:null,page:0,mode:'paged',brightness:100,theme:'dark',transition:'slide',rtl:true,bookmarks:new Set(),wake:null,gesture:null,zoom:1,pdfRender:0,pdfDoc:null,pointers:new Map(),drag:null,basePageWidth:0,basePageHeight:0};
+const screens=['home','settings','readerScreen'];function toast(s){let r=$('toastRoot');r.innerHTML='';let d=document.createElement('div');d.className='toast';d.textContent=s;r.append(d);setTimeout(()=>d.remove(),2600)}
+function show(id){if(id==='settings'&&$('readerScreen').classList.contains('active'))S.settingsReturn='readerScreen';else if(id==='settings'&&$('home').classList.contains('active'))S.settingsReturn='home';screens.forEach(x=>$(x).classList.toggle('active',x===id));$('top').classList.toggle('hidden',id==='readerScreen');$('nav').classList.toggle('hidden',id==='readerScreen');document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.target===id));if(id==='settings')$('backHome').textContent=S.settingsReturn==='readerScreen'?'Voltar ao leitor':'Voltar à biblioteca'}
+function sort(a,b){return a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'})}
+let dbp=null;
+function db(){return dbp||(dbp=new Promise((ok,fail)=>{const r=indexedDB.open('kumo',1);r.onupgradeneeded=()=>{const d=r.result;d.createObjectStore('books',{keyPath:'id'});d.createObjectStore('pages');d.createObjectStore('pdfs')};r.onsuccess=()=>ok(r.result);r.onerror=()=>{dbp=null;fail(r.error)}}))}
+function idb(stores,mode,fn){return db().then(d=>new Promise((ok,fail)=>{const t=d.transaction(stores,mode);let r;try{r=fn(t)}catch(e){try{t.abort()}catch{}fail(e);return}t.oncomplete=()=>ok(r&&typeof r==='object'&&'result' in r?r.result:r);t.onerror=()=>fail(t.error);t.onabort=()=>fail(t.error||new Error('Transação cancelada'))}))}
+const IMGRE=/\.(jpe?g|png|webp|gif|avif|bmp)$/i,EXT={jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',gif:'image/gif',avif:'image/avif',bmp:'image/bmp'};
+const typeOf=n=>EXT[(n.split('.').pop()||'').toLowerCase()]||'image/jpeg';
+const newId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const meta=b=>({id:b.id,name:b.name,kind:b.kind,n:b.n,page:b.page,rtl:!!b.rtl,t:b.t,coverUrl:b.coverUrl||null});
+const hydrate=b=>{b.files=Array.from({length:b.n},()=>({}));return b};
+let metaT=0;
+function flushMeta(){clearTimeout(metaT);metaT=0;if(S.book)idb(['books'],'readwrite',t=>t.objectStore('books').put(meta(S.book))).catch(console.error)}
+function saveMetaSoon(){clearTimeout(metaT);metaT=setTimeout(flushMeta,400)}
+function saveBm(){try{localStorage.setItem('kumo:bm',JSON.stringify([...S.bookmarks]))}catch{}}
+const urls=new Map();
+async function pageBlobUrl(b,i){const k=b.id+':'+i;let u=urls.get(k);if(u)return u;const bl=await idb(['pages'],'readonly',t=>t.objectStore('pages').get(k));if(!bl)throw new Error('Página ausente');u=urls.get(k)||URL.createObjectURL(bl);urls.set(k,u);return u}
+async function pageUrl(b,i){const u=await pageBlobUrl(b,i);
+ for(const [k,v] of urls){const j=k.lastIndexOf(':');if(k.slice(0,j)!==b.id||Math.abs(+k.slice(j+1)-i)>4){URL.revokeObjectURL(v);urls.delete(k)}}
+ for(const d of [1,-1]){const n=i+d;if(n>=0&&n<b.n)pageBlobUrl(b,n).then(x=>{const im=new Image();im.decoding='async';im.src=x}).catch(()=>{})}
+ return u}
+async function makeImgCover(blob){const bmp=await createImageBitmap(blob);const sc=Math.min(1,360/Math.max(bmp.width,bmp.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(bmp.width*sc));c.height=Math.max(1,Math.round(bmp.height*sc));c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);if(bmp.close)bmp.close();return c.toDataURL('image/jpeg',.82)}
+async function addBook(name,kind,blobs,extra={}){
+ const n=kind==='pdf'?extra.n:blobs.length;
+ if(!n){toast('Nenhuma imagem compatível encontrada.');return}
+ const b={id:newId(),name,kind,n,page:0,rtl:kind==='pdf'?false:S.rtl,t:Date.now(),coverUrl:extra.cover||null};
+ if(kind!=='pdf'){try{b.coverUrl=await makeImgCover(blobs[0])}catch(e){console.warn(e)}}
+ try{await idb(['books','pages','pdfs'],'readwrite',t=>{const p=t.objectStore('pages');if(blobs)blobs.forEach((bl,i)=>p.put(bl,b.id+':'+i));if(extra.pdfBlob)t.objectStore('pdfs').put(extra.pdfBlob,b.id);t.objectStore('books').put(meta(b))})}
+ catch(e){console.error(e);toast('Não foi possível salvar no aparelho (falta de espaço?).');return}
+ hydrate(b);if(extra.pdfDoc)b.pdfDoc=extra.pdfDoc;
+ S.books.unshift(b);renderLibrary();await openBook(b);toast('Capítulo importado.')}
+async function deleteBook(b){
+ try{await idb(['books','pages','pdfs'],'readwrite',t=>{t.objectStore('books').delete(b.id);t.objectStore('pdfs').delete(b.id);const p=t.objectStore('pages');for(let i=0;i<b.n;i++)p.delete(b.id+':'+i)})}
+ catch(e){console.error(e);toast('Não foi possível excluir.');return}
+ for(const [k,u] of urls)if(k.startsWith(b.id+':')){URL.revokeObjectURL(u);urls.delete(k)}
+ if(S.book===b)S.book=null;
+ for(const k of [...S.bookmarks])if(k.startsWith(b.id+':'))S.bookmarks.delete(k);
+ saveBm();S.books=S.books.filter(x=>x!==b);renderLibrary();toast('Título excluído.')}
+function renderLibrary(){ $('countBooks').textContent=S.books.length+' '+(S.books.length===1?'título':'títulos');let list=$('books'),cont=$('continue');list.innerHTML='';cont.innerHTML='';if(!S.books.length){cont.className='empty';cont.textContent='Importe imagens ou um arquivo CBZ/ZIP para começar.';return}cont.className='books';S.books.forEach(b=>{let el=card(b);list.append(el)});cont.append(card(S.books[0]))}
+function card(b){let el=document.createElement('article');el.className='book';el.innerHTML='<div class="cover"><span>雲</span></div><div class="info"><b></b><small></small><div class="bar"><i></i></div></div>';if(b.coverUrl){let im=new Image();im.src=b.coverUrl;im.alt='Capa de '+b.name;im.decoding='async';el.querySelector('.cover').replaceChildren(im)}el.querySelector('.info b').textContent=b.name;el.querySelector('.info small').textContent='Página '+(b.page+1)+' de '+b.files.length;el.querySelector('.bar i').style.width=((b.page+1)/b.files.length*100)+'%';
+ let d=document.createElement('button');d.className='del';d.textContent='🗑';d.setAttribute('aria-label','Excluir '+b.name);
+ d.onclick=ev=>{ev.stopPropagation();if(!d.classList.contains('arm')){d.classList.add('arm');d.textContent='Excluir?';setTimeout(()=>{d.classList.remove('arm');d.textContent='🗑'},3000);return}deleteBook(b)};
+ el.append(d);el.onclick=()=>openBook(b);return el}
+function setupPdf(){pdfjsLib.GlobalWorkerOptions.workerSrc=new URL('lib/pdf.worker.min.js',location.href).href}
+async function openBook(b){
+ try{if(b.kind==='pdf'&&!b.pdfDoc){if(!window.pdfjsLib)throw new Error('pdf');setupPdf();const bl=await idb(['pdfs'],'readonly',t=>t.objectStore('pdfs').get(b.id));b.pdfDoc=await pdfjsLib.getDocument({data:await bl.arrayBuffer()}).promise}}
+ catch(e){console.error(e);toast('Não foi possível abrir este PDF.');return}
+ b.t=Date.now();S.books=[b,...S.books.filter(x=>x!==b)];
+ S.book=b;S.page=Math.min(b.page,b.files.length-1);S.mode=$('mode').value;S.zoom=1;S.rtl=!!b.rtl;$('rtl').checked=S.rtl;S.pdfRender++;show('readerScreen');$('bookTitle').textContent=b.name;theme();renderPage(false)}
+function theme(){let color=S.theme==='black'?'#000':S.theme==='light'?'#f2efe8':S.theme==='sepia'?'#e8d9bb':'#08080b';$('reader').style.background=color;$('stage').style.background=color;document.documentElement.style.setProperty('--accent',S.theme==='sepia'?'#916b42':'#b9a2ff')}
+async function renderPage(animate=true){
+if(!S.book)return;
+S.page=Math.max(0,Math.min(S.page,S.book.files.length-1));S.book.page=S.page;saveMetaSoon();
+let stage=$('stage');stage.innerHTML='';stage.className='stage'+(S.mode==='vertical'?' vertical':S.mode==='width'?' width':S.mode==='height'?' height':'');
+S.zoom=Math.max(1,Math.min(4,S.zoom));let item=S.book.files[S.page],token=++S.pdfRender;
+const wrap=document.createElement('div');wrap.className='page-wrap';stage.append(wrap);
+let pageEl;
+try{
+ if(S.book.kind==='pdf'){
+  const page=await S.book.pdfDoc.getPage(S.page+1);if(token!==S.pdfRender)return;
+  const base=page.getViewport({scale:1,rotation:page.rotate});
+  const sw=Math.max(240,stage.clientWidth||window.innerWidth),sh=Math.max(240,stage.clientHeight||window.innerHeight);
+  let scale=Math.min(2.5,sw/base.width);
+  if(S.mode==='height')scale=Math.min(2.5,sh/base.height);
+  if(S.mode==='vertical')scale=Math.min(2.5,sw/base.width);
+  const viewport=page.getViewport({scale,rotation:page.rotate});
+  S.basePageWidth=viewport.width;S.basePageHeight=viewport.height;
+  const canvas=document.createElement('canvas');canvas.setAttribute('aria-label',S.book.name+', página '+(S.page+1));
+  const dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.floor(viewport.width*dpr);canvas.height=Math.floor(viewport.height*dpr);
+  canvas.style.width=viewport.width+'px';canvas.style.height=viewport.height+'px';canvas.style.filter='brightness('+(S.brightness/100)+')';
+  const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+  wrap.append(canvas);pageEl=canvas;
+  wrap.style.width=viewport.width+'px';wrap.style.height=viewport.height+'px';
+  await page.render({canvasContext:ctx,viewport}).promise;if(token!==S.pdfRender)return;
+ }else{
+  const img=new Image();img.alt=S.book.name+', página '+(S.page+1);img.draggable=false;img.src=await pageUrl(S.book,S.page);img.style.filter='brightness('+(S.brightness/100)+')';
+  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject});
+  if(token!==S.pdfRender)return;
+  let w=img.naturalWidth||800,h=img.naturalHeight||1200;
+  const sw=Math.max(240,stage.clientWidth||window.innerWidth),sh=Math.max(240,stage.clientHeight||window.innerHeight);
+  let scale=Math.min(1,sw/w,sh/h);
+  if(S.mode==='width'||S.mode==='vertical')scale=Math.min(2.5,sw/w);
+  if(S.mode==='height')scale=Math.min(2.5,sh/h);
+  S.basePageWidth=Math.max(1,w*scale);S.basePageHeight=Math.max(1,h*scale);
+  img.style.width=S.basePageWidth+'px';img.style.height=S.basePageHeight+'px';
+  wrap.style.width=S.basePageWidth+'px';wrap.style.height=S.basePageHeight+'px';wrap.append(img);pageEl=img;
+ }
+ pageEl.style.transform='scale('+S.zoom+')';wrap.style.width=(S.basePageWidth*S.zoom)+'px';wrap.style.height=(S.basePageHeight*S.zoom)+'px';
+ if(S.zoom>1)stage.classList.add('zoomed');
+}catch(err){console.error(err);if(token===S.pdfRender)toast('Não foi possível renderizar esta página.')}
+$('pageSub').textContent='Página '+(S.page+1)+' de '+S.book.files.length;$('pageCount').textContent=(S.page+1)+' / '+S.book.files.length;$('slider').max=S.book.files.length;$('slider').value=S.page+1;let key=S.book.id+':'+S.page;$('favorite').textContent=S.bookmarks.has(key)?'★':'☆';$('favStatus').textContent=S.bookmarks.has(key)?'★ Página favorita':'Sem favorito';$('modeButton').textContent=S.mode==='vertical'?'☰ Vertical':S.mode==='width'?'↔ Largura':S.mode==='height'?'↕ Altura':'▤ Página';renderLibrary();
+}
+function applyZoom(z,clientX,clientY){
+ const stage=$('stage'),wrap=stage.querySelector('.page-wrap'),el=wrap?.querySelector('img,canvas');if(!wrap||!el)return;
+ const old=S.zoom,n=Math.max(1,Math.min(4,z));if(Math.abs(n-old)<.001)return;
+ const sr=stage.getBoundingClientRect(),wr=wrap.getBoundingClientRect();
+ const ax=clientX==null?stage.clientWidth/2:clientX-sr.left,ay=clientY==null?stage.clientHeight/2:clientY-sr.top;
+ const left=wrap.offsetLeft,top=wrap.offsetTop;
+ const localX=(ax+stage.scrollLeft-left)/old,localY=(ay+stage.scrollTop-top)/old;
+ S.zoom=n;el.style.transform='scale('+n+')';wrap.style.width=(S.basePageWidth*n)+'px';wrap.style.height=(S.basePageHeight*n)+'px';
+ stage.classList.toggle('zoomed',n>1);
+ stage.scrollLeft=Math.max(0,left+localX*n-ax);stage.scrollTop=Math.max(0,top+localY*n-ay);
+ if(n===1){stage.scrollLeft=0;stage.scrollTop=0}
+}
+function setZoom(z){applyZoom(z);toast('Zoom: '+Math.round(S.zoom*100)+'%')}
+function toggleFullscreen(){if(window.KumoNative){window.KumoNative.setFullscreen(!window.KumoNative.isFullscreen());return}let el=$('reader');if(!document.fullscreenElement){let req=el.requestFullscreen||el.webkitRequestFullscreen;if(req){Promise.resolve(req.call(el)).catch(()=>toast('Tela cheia não disponível neste navegador.'))}else toast('Tela cheia não suportada neste navegador.')}else{let exit=document.exitFullscreen||document.webkitExitFullscreen;if(exit)exit.call(document)}}
+function turn(d){if(!S.book)return;let n=S.page+((S.book?S.book.rtl:S.rtl)?-d:d);if(n<0||n>=S.book.files.length){toast(n<0?'Primeira página.':'Fim do capítulo.');return}S.page=n;renderPage(true)}
+function openImportChoice(){toast('Escolha imagens, CBZ/ZIP ou PDF na biblioteca.')}
+async function importImages(files){
+ const list=[...files].filter(f=>f.type.startsWith('image/')||IMGRE.test(f.name)).sort(sort);
+ if(!list.length){toast('Selecione arquivos de imagem válidos.');return}
+ toast('Importando…');
+ await addBook(list.length===1?list[0].name.replace(/\.[^.]+$/,''):'Capítulo importado','images',list.map(f=>f.slice(0,f.size,f.type||typeOf(f.name))))}
+async function importZip(f){if(!f)return;if(!window.JSZip){toast('Não foi possível carregar o leitor ZIP.');return}try{toast('Abrindo arquivo…');let z=await JSZip.loadAsync(f),entries=Object.values(z.files).filter(x=>!x.dir&&IMGRE.test(x.name)&&!/(^|\/)(__MACOSX\/|\.)/.test(x.name)).sort(sort),blobs=[];for(let x of entries){let bl=await x.async('blob');blobs.push(bl.slice(0,bl.size,typeOf(x.name)))}await addBook(f.name.replace(/\.(cbz|zip)$/i,''),'images',blobs)}catch(e){console.error(e);toast('Arquivo inválido ou corrompido.')} }
+async function makePdfCover(doc){
+ const page=await doc.getPage(1), viewport=page.getViewport({scale:1});
+ const scale=Math.min(1,360/Math.max(viewport.width,viewport.height));
+ const thumb=page.getViewport({scale});
+ const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(thumb.width));canvas.height=Math.max(1,Math.round(thumb.height));
+ const ctx=canvas.getContext('2d',{alpha:false});
+ await page.render({canvasContext:ctx,viewport:thumb,background:'#fff'}).promise;
+ return canvas.toDataURL('image/jpeg',.82);
+}
+async function importPdf(f){if(!f)return;if(!window.pdfjsLib){toast('O motor PDF não carregou.');return}try{toast('Abrindo PDF…');setupPdf();const pdfBlob=f.slice(0,f.size,'application/pdf');let doc=await pdfjsLib.getDocument({data:await pdfBlob.arrayBuffer()}).promise;let cover=await makePdfCover(doc);await addBook(f.name.replace(/\.pdf$/i,''),'pdf',null,{n:doc.numPages,cover,pdfBlob,pdfDoc:doc});toast('PDF importado: '+doc.numPages+' páginas.')}catch(err){console.error(err);toast('Não foi possível abrir este PDF.')} }
+
+$('importTop').onclick=$('importHero').onclick=()=>$('imageFiles').click();$('importImages').onclick=()=>$('imageFiles').click();$('importZip').onclick=()=>$('zipFile').click();$('importPdf').onclick=()=>$('pdfFile').click();$('imageFiles').onchange=e=>{importImages(e.target.files);e.target.value=''};$('zipFile').onchange=e=>{importZip(e.target.files[0]);e.target.value=''};$('pdfFile').onchange=e=>{importPdf(e.target.files[0]);e.target.value=''};
+$('settingsTop').onclick=$('readerSettings').onclick=()=>show('settings');$('rtl').onchange=e=>{S.rtl=e.target.checked;if(S.book)S.book.rtl=S.rtl};$('backHome').onclick=()=>show(S.settingsReturn||'home');document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.target));$('close').onclick=()=>show('home');$('prev').onclick=()=>turn(-1);$('next').onclick=()=>turn(1);$('slider').oninput=e=>{if(S.book){S.page=+e.target.value-1;renderPage(false)}};$('favorite').onclick=()=>{if(!S.book)return;let k=S.book.id+':'+S.page;S.bookmarks.has(k)?S.bookmarks.delete(k):S.bookmarks.add(k);saveBm();renderPage(false)};
+$('mode').onchange=()=>{S.mode=$('mode').value;if(S.book){S.zoom=1;renderPage(false)}};$('zoomIn').onclick=()=>setZoom(S.zoom+.25);$('zoomOut').onclick=()=>setZoom(S.zoom-.25);$('fullscreen').onclick=toggleFullscreen;document.addEventListener('fullscreenchange',()=>{$('fullscreen').textContent=document.fullscreenElement?'⤢':'⛶'});$('modeButton').onclick=()=>{let a=['paged','vertical','width','height'];S.mode=a[(a.indexOf(S.mode)+1)%a.length];$('mode').value=S.mode;saveSet();renderPage(false)};$('quickBright').onclick=()=>show('settings');$('brightness').oninput=e=>{S.brightness=+e.target.value;$('brightLabel').textContent=S.brightness+'%';let img=$('stage').querySelector('img,canvas');if(img)img.style.filter='brightness('+(S.brightness/100)+')';$('brightnessOverlay').style.opacity=String(Math.max(0,(100-S.brightness)/150))};$('theme').onchange=e=>{S.theme=e.target.value;theme()};$('transition').onchange=e=>S.transition=e.target.value;$('mode').onchange=e=>{S.mode=e.target.value;if(S.book)renderPage(false)};$('rtl').onchange=e=>{S.rtl=e.target.checked;if(S.book)S.book.rtl=S.rtl};
+$('keepAwake').onchange=async e=>{if(window.KumoNative){window.KumoNative.setKeepAwake(e.target.checked);return}try{if(e.target.checked&&navigator.wakeLock)S.wake=await navigator.wakeLock.request('screen');else if(S.wake){await S.wake.release();S.wake=null}if(e.target.checked&&!navigator.wakeLock)toast('Não suportado neste navegador.')}catch{toast('Não foi possível manter a tela ligada.')}};
+$('stage').onclick=e=>{if(!S.book||S.zoom>1.01||Date.now()-(S.tapAt||0)<600)return;let r=$('stage').getBoundingClientRect(),x=e.clientX-r.left;if(!$('tapZones').checked){$('reader').classList.toggle('hide-ui');return}if(x<r.width*.27)turn(-1);else if(x>r.width*.73)turn(1);else $('reader').classList.toggle('hide-ui')};
+$('stage').addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();applyZoom(S.zoom+(e.deltaY<0?.15:-.15),e.clientX,e.clientY)}},{passive:false});
+const stageEl=$('stage');
+stageEl.addEventListener('pointerdown',e=>{
+ if(e.pointerType==='mouse'&&e.button!==0)return;
+ stageEl.setPointerCapture?.(e.pointerId);S.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(S.pointers.size===1){S.drag={x:e.clientX,y:e.clientY,scrollLeft:stageEl.scrollLeft,scrollTop:stageEl.scrollTop,moved:false};}
+ if(S.pointers.size===2){const a=[...S.pointers.values()];S.pinch={distance:Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),zoom:S.zoom,midX:(a[0].x+a[1].x)/2,midY:(a[0].y+a[1].y)/2};S.drag=null;}
+});
+stageEl.addEventListener('pointermove',e=>{
+ if(!S.pointers.has(e.pointerId))return;S.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(S.pointers.size>=2&&S.pinch){const a=[...S.pointers.values()],dist=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y),midX=(a[0].x+a[1].x)/2,midY=(a[0].y+a[1].y)/2;applyZoom(S.pinch.zoom*dist/Math.max(1,S.pinch.distance),midX,midY);S.pinch.midX=midX;S.pinch.midY=midY;e.preventDefault();return}
+ if(S.drag&&S.zoom>1){const dx=e.clientX-S.drag.x,dy=e.clientY-S.drag.y;if(Math.abs(dx)+Math.abs(dy)>3)S.drag.moved=true;stageEl.scrollLeft=S.drag.scrollLeft-dx;stageEl.scrollTop=S.drag.scrollTop-dy;e.preventDefault();}
+});
+function endPointer(e){const wasPinch=!!S.pinch;S.pointers.delete(e.pointerId);if(S.pointers.size<2)S.pinch=null;if(S.pointers.size===0){const drag=S.drag;S.drag=null;if(drag)S.tapAt=Date.now();if(!wasPinch&&drag&&S.zoom<=1.01&&!drag.moved&&S.book){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.2)turn(dx<0?1:-1);else if(Math.abs(dx)<12&&Math.abs(dy)<12){const r=stageEl.getBoundingClientRect(),x=e.clientX-r.left;if($('tapZones').checked){if(x<r.width*.27)turn(-1);else if(x>r.width*.73)turn(1);else $('reader').classList.toggle('hide-ui')}else $('reader').classList.toggle('hide-ui')}}}}
+stageEl.addEventListener('pointerup',endPointer);stageEl.addEventListener('pointercancel',endPointer);stageEl.addEventListener('lostpointercapture',e=>{S.pointers.delete(e.pointerId);if(!S.pointers.size){S.pinch=null;S.drag=null}});
+document.addEventListener('keydown',e=>{if(!$('readerScreen').classList.contains('active'))return;if(e.key==='ArrowRight')turn(1);else if(e.key==='ArrowLeft')turn(-1);else if(e.key===' '){e.preventDefault();turn(1)}else if(e.key==='Escape'){if(document.fullscreenElement)toggleFullscreen();else show('home')}});
+function saveSet(){try{localStorage.setItem('kumo:set',JSON.stringify({brightness:+$('brightness').value,theme:$('theme').value,transition:$('transition').value,mode:$('mode').value,tapZones:$('tapZones').checked,keepAwake:$('keepAwake').checked}))}catch{}}
+function loadSet(){let v=null;try{v=JSON.parse(localStorage.getItem('kumo:set')||'null')}catch{}if(!v)return;
+ const set=(id,val,ev)=>{const el=$(id);if(val==null)return;if(el.type==='checkbox')el.checked=!!val;else el.value=val;el.dispatchEvent(new Event(ev))};
+ set('brightness',v.brightness,'input');set('theme',v.theme,'change');set('transition',v.transition,'change');set('mode',v.mode,'change');set('tapZones',v.tapZones,'change');
+ if(v.keepAwake&&window.KumoNative)set('keepAwake',true,'change')}
+$('settings').addEventListener('change',()=>{saveSet();saveMetaSoon()});$('settings').addEventListener('input',saveSet);
+async function init(){
+ try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch{}
+ try{JSON.parse(localStorage.getItem('kumo:bm')||'[]').forEach(k=>S.bookmarks.add(k))}catch{}
+ try{const rows=await idb(['books'],'readonly',t=>t.objectStore('books').getAll());S.books=rows.sort((a,b)=>(b.t||0)-(a.t||0)).map(hydrate);renderLibrary()}catch(e){console.error(e);toast('Não foi possível ler a biblioteca salva.')}}
+window.kumoBack=()=>{if($('readerScreen').classList.contains('active')){if(window.KumoNative&&window.KumoNative.isFullscreen()){window.KumoNative.setFullscreen(false);return true}show('home');return true}if($('settings').classList.contains('active')){show(S.settingsReturn||'home');return true}return false};
+window.kumoSave=flushMeta;window.kumoFsChanged=on=>{$('fullscreen').textContent=on?'⤢':'⛶'};
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flushMeta()});
+document.addEventListener('contextmenu',e=>e.preventDefault());
+let rzT,pw=innerWidth,ph=innerHeight;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(Math.abs(innerWidth-pw)<40&&Math.abs(innerHeight-ph)<40)return;pw=innerWidth;ph=innerHeight;if(S.book&&$('readerScreen').classList.contains('active'))renderPage(false)},250)});
+renderLibrary();loadSet();init();
+})();
+</script></body></html>
