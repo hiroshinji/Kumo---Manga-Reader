@@ -12,6 +12,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -19,30 +20,49 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+          cache: gradle
 
-      - uses: android-actions/setup-android@v3
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          cmdline-tools-version: 15859902
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+          accept-android-sdk-licenses: true
+          log-accepted-android-sdk-licenses: false
 
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
-      - name: Compilar APK (debug)
+      - name: Verificar ambiente
+        run: |
+          java -version
+          sdkmanager --version
+          test -d "$ANDROID_SDK_ROOT/platforms/android-35"
+          test -d "$ANDROID_SDK_ROOT/build-tools/35.0.0"
+
+      - name: Compilar APK
         run: gradle :app:assembleDebug --no-daemon --stacktrace
 
-      - name: Conferir bibliotecas embutidas no APK
+      - name: Verificar APK e bibliotecas
         run: |
-          unzip -l app/build/outputs/apk/debug/app-debug.apk | grep -E "assets/(index.html|lib/jszip.min.js|lib/pdf.min.js|lib/pdf.worker.min.js)" | tee /tmp/assets.txt
+          APK="app/build/outputs/apk/debug/app-debug.apk"
+          test -f "$APK"
+          unzip -l "$APK" | grep -E \
+            "assets/(index.html|lib/jszip.min.js|lib/pdf.min.js|lib/pdf.worker.min.js)" \
+            | tee /tmp/assets.txt
           test "$(wc -l < /tmp/assets.txt)" -eq 4
 
-      - name: Renomear APK
+      - name: Preparar APK
         run: cp app/build/outputs/apk/debug/app-debug.apk Kumo.apk
 
       - uses: actions/upload-artifact@v4
         with:
           name: Kumo-APK
           path: Kumo.apk
+          if-no-files-found: error
 
-      - name: Publicar em Releases (somente em tags v*)
+      - name: Publicar Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
