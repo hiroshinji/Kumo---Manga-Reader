@@ -34,6 +34,36 @@ jobs:
         with:
           gradle-version: '8.9'
 
+      - name: Extrair e validar o projeto ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -t ZIPS < <(
+            find "$GITHUB_WORKSPACE" \
+              -maxdepth 1 -type f -iname '*.zip'
+          )
+
+          if [ "${#ZIPS[@]}" -ne 1 ]; then
+            echo "::error::Esperado um único ZIP na raiz."
+            find "$GITHUB_WORKSPACE" -maxdepth 1 -type f
+            exit 1
+          fi
+
+          PROJECT_DIR="$GITHUB_WORKSPACE/_kumo_project"
+          mkdir -p "$PROJECT_DIR"
+          unzip -q "${ZIPS[0]}" -d "$PROJECT_DIR"
+
+          if [ ! -f "$PROJECT_DIR/settings.gradle.kts" ] ||
+             [ ! -f "$PROJECT_DIR/app/build.gradle.kts" ]; then
+            echo "::error::O ZIP não contém a estrutura Android esperada."
+            find "$PROJECT_DIR" -maxdepth 5 -type f | head -150
+            exit 1
+          fi
+
+          echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
+          echo "Projeto encontrado e validado."
+
       - name: Verificar ambiente
         run: |
           java -version
@@ -42,19 +72,29 @@ jobs:
           test -d "$ANDROID_SDK_ROOT/build-tools/35.0.0"
 
       - name: Compilar APK
-        run: gradle :app:assembleDebug --no-daemon --stacktrace
+        run: |
+          gradle -p "$PROJECT_DIR" \
+            :app:assembleDebug --no-daemon --stacktrace
 
       - name: Verificar APK e bibliotecas
+        shell: bash
         run: |
-          APK="app/build/outputs/apk/debug/app-debug.apk"
+          set -euo pipefail
+
+          APK="$PROJECT_DIR/app/build/outputs/apk/debug/app-debug.apk"
           test -f "$APK"
+
           unzip -l "$APK" | grep -E \
-            "assets/(index.html|lib/jszip.min.js|lib/pdf.min.js|lib/pdf.worker.min.js)" \
+            'assets/(index.html|lib/jszip.min.js|lib/pdf.min.js|lib/pdf.worker.min.js)' \
             | tee /tmp/assets.txt
+
           test "$(wc -l < /tmp/assets.txt)" -eq 4
+          echo "APK e bibliotecas verificados."
 
       - name: Preparar APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk Kumo.apk
+        run: |
+          cp "$PROJECT_DIR/app/build/outputs/apk/debug/app-debug.apk" \
+            "$GITHUB_WORKSPACE/Kumo.apk"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -67,4 +107,3 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: Kumo.apk
-          
